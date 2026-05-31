@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <style>* { margin: 0; padding: 0; } html, body { background: #fff; }</style>
+
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '993725449682149');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=993725449682149&ev=PageView&noscript=1"/>
+  </noscript>
+</head>
+<body>
+  <script>
+    (function () {
+      function generateEventId() {
+        return 'ev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+      function getFBP() {
+        var m = document.cookie.match(/_fbp=([^;]+)/);
+        return m ? m[1] : null;
+      }
+      function getFBC() {
+        var m = document.cookie.match(/_fbc=([^;]+)/);
+        if (m) return m[1];
+        var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+        return fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : null;
+      }
+
+      var WHATSAPP = 'https://chat.whatsapp.com/EWni36ADN93LW5MBY7e566';
+      var eventId  = generateEventId();
+
+      fbq('track', 'Lead', { currency: 'NGN', value: 0, eventID: eventId });
+
+      fetch('/.netlify/functions/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventId:   eventId,
+          fbp:       getFBP(),
+          fbc:       getFBC(),
+          userAgent: navigator.userAgent
+        }),
+        keepalive: true
+      }).finally(function () {
+        window.location.replace(WHATSAPP);
+      });
+
+      setTimeout(function () {
+        window.location.replace(WHATSAPP);
+      }, 3000);
+    })();
+  </script>
+</body>
+</html>
